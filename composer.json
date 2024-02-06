@@ -1,0 +1,23 @@
+{
+    "name": "madahost/tmdb",
+    "license": "MIT",
+    "description": "TMDB.com api service for php",
+    "type": "package",
+    "authors": [
+        {
+            "name": "madahost",
+            "email": "madahost@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "madahost\\tmdb\\": "src/"
+        }
+    },
+    "require": {},
+    "scripts": {
+        "test": "vendor/bin/phpunit tests"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
