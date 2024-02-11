@@ -45,16 +45,22 @@ class Tmdb
     {
         return $this->id->result("collection", $collection);
     }
-	
 	public function tv($tv)
-    {
-        $tvShow = $this->id->result("tv", $tv);
+   	 {
+		$result = []
+        	$tvShow = $this->id->result("tv", $tv);
 		$tvShow = json_decode($tvShow);
 		$sesNum = range(1, $tvShow->number_of_seasons);
+		$seasons = array();
+		for ($i = 0; $i < count($sesNum); $i += 20) {
+		    $seasons[] = array_slice($sesNum, $i, 20);
+		}
+		 
+		 foreach($seasons as $season) {
+			$result[] = ;
+		 }
+	    
 		define('APPEND_TO_RESPONSE', 'season/'. join(',season/', $sesNum));
         return $this->id->result("tv", $tv);
-    }
-
-
-
+    	}
 }
