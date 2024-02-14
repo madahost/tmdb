@@ -17,11 +17,11 @@ class Client implements ClientInterface
         $this->init = curl_init();
     }
 
-    public function apiKeys($keys, $value)
+    public function apiKeys($keys, $value, $options = [])
     {
         $Arr = ['api_key' => $this->api_key ];
-		if(defined('APPEND_TO_RESPONSE')) {
-			$Arr += ['append_to_response' => APPEND_TO_RESPONSE];
+		if (!empty($options)) {
+			$Arr += $options;
 		}
         return "https://api.themoviedb.org/3/".$keys."/". $value . '?' . http_build_query($Arr);
     }
@@ -34,9 +34,9 @@ class Client implements ClientInterface
         return curl_exec($this->init);
     }
 
-    public function result($keys, $value)
+    public function result($keys, $value, $options = [])
     {
-        $arr = $this->apiKeys($keys, $value);
+        $arr = $this->apiKeys($keys, $value, $options);
         return $this->createResponse($this->setOpt($arr));
     }
 

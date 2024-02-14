@@ -36,31 +36,37 @@ class Tmdb
         return $this->id->result("review", $review);
     }
 
-    public function tvOld($tv)
+    public function seasons($tv, $seasonsNum)
     {
-        return $this->id->result("tv", $tv);
+		$return = ['seasons' => []];
+		$seasonsArray = range(1, $seasonsNum);
+		
+		for ($i = 0; $i < count($seasonsArray); $i += 20) {
+		    $seasons[] = array_slice($seasonsArray, $i, 20);
+		}
+		foreach($seasons as $season) {
+			$result = json_decode($this->id->result("tv", $tv, ['append_to_response' => 'season/'. join(',season/', $season)]), true);
+			if(isset($result['seasons'])) {
+				foreach($season as $key => $value) {
+					if(isset($result['season/'.$key])) {
+						$result['seasons'][$key]['episodes'] = $result['season/'.$key]['episodes'];
+						unset($result['season/'.$key]);
+					}
+				}
+				$return['seasons'] += $result['seasons'] ;
+			}
+		}
+        return $return['seasons'];
     }
 
     public function collection($collection)
     {
         return $this->id->result("collection", $collection);
     }
+	
 	public function tv($tv)
-   	 {
-		$result = []
-        	$tvShow = $this->id->result("tv", $tv);
-		$tvShow = json_decode($tvShow);
-		$sesNum = range(1, $tvShow->number_of_seasons);
-		$seasons = array();
-		for ($i = 0; $i < count($sesNum); $i += 20) {
-		    $seasons[] = array_slice($sesNum, $i, 20);
-		}
-		 
-		 foreach($seasons as $season) {
-			$result[] = ;
-		 }
-	    
-		define('APPEND_TO_RESPONSE', 'season/'. join(',season/', $sesNum));
-        return $this->id->result("tv", $tv);
-    	}
+	{
+		$tvShow = $this->id->result("tv", $tv);
+        return $tvShow;
+	}
 }
