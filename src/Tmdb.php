@@ -47,7 +47,7 @@ class Tmdb
 		foreach($seasons as $season) {
 			$result = json_decode($this->id->result("tv", $tv, ['append_to_response' => 'season/'. join(',season/', $season)]), true);
 			if(isset($result['seasons'])) {
-				foreach($season as $key => $value) {
+				foreach($season as $key) {
 					if(isset($result['season/'.$key])) {
 						$result['seasons'][$key]['episodes'] = $result['season/'.$key]['episodes'];
 						unset($result['season/'.$key]);
